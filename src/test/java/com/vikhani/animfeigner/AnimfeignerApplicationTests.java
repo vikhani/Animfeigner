@@ -1,4 +1,4 @@
-package com.vikhani.Animfeigner;
+package com.vikhani.animfeigner;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

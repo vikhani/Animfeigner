@@ -1,4 +1,4 @@
-package com.vikhani.Animfeigner;
+package com.vikhani.animfeigner;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,8 +9,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 public class AnimfeignerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AnimfeignerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AnimfeignerApplication.class, args);
+    }
 
 }

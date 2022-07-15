@@ -18,9 +18,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class AnimalResult implements Serializable {
     @Id
-    private Long id;
-
-    @Column(name = "uuid", unique = true)
     private UUID UUId;
 
     @Column(name = "status")

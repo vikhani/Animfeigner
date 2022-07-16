@@ -28,6 +28,7 @@ public class AnimalResultsService {
     public AnimalResult getAnimalsResults() {
         AnimalResult result = new AnimalResult();
         result.setUUId(UUID.randomUUID());
+
         try {
             ResponseEntity<List<AnimalDto>> requestRes = client.getAnimals();
 
@@ -46,13 +47,11 @@ public class AnimalResultsService {
             } else {
                 setNon2xxStatusFallback(result, requestRes.getStatusCodeValue());
             }
-
-            return addAnimalResult(result);
         } catch (FeignException ex) {
             setNon2xxStatusFallback(result, ex.status());
-
-            return addAnimalResult(result);
         }
+
+        return addAnimalResult(result);
     }
 
     private static void setNon2xxStatusFallback(AnimalResult res, int status) {

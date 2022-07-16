@@ -9,6 +9,8 @@ import feign.FeignException;
 
 import lombok.AllArgsConstructor;
 
+import org.slf4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ public class AnimalResultsService {
     private AnimalsResultsRepository repo;
     private final AnimalRequestsClient client;
 
+    private Logger logger;
+
     public AnimalResult addAnimalResult(AnimalResult result) {
         return repo.save(result);
     }
@@ -32,11 +36,17 @@ public class AnimalResultsService {
         try {
             ResponseEntity<List<AnimalDto>> requestRes = client.getAnimals();
 
-            if (requestRes.getStatusCode().is2xxSuccessful()) {
+            List<AnimalDto> body = requestRes.getBody();
+            HttpStatus status = requestRes.getStatusCode();
+
+            logger.info("Request response entity: {}, {}",
+                    status,
+                    body == null ? "" : body);
+
+            if (status.is2xxSuccessful()) {
                 result.setHttpStatus(requestRes.getStatusCodeValue());
-                List<AnimalDto> res = requestRes.getBody();
-                if (res != null && !res.isEmpty()) {
-                    List<String> names = res.stream()
+                if (body != null && !body.isEmpty()) {
+                    List<String> names = body.stream()
                             .map(AnimalDto::getNickname)
                             .collect(Collectors.toCollection(ArrayList::new));
 
@@ -48,6 +58,10 @@ public class AnimalResultsService {
                 setNon2xxStatusFallback(result, requestRes.getStatusCodeValue());
             }
         } catch (FeignException ex) {
+            logger.info("Couldn't get data from Animventory: {}, {}",
+                    ex.status(),
+                    ex.getMessage());
+
             setNon2xxStatusFallback(result, ex.status());
         }
 

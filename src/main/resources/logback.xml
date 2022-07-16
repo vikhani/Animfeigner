@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${user.dir}/logs/animal_request.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="animal_request" level="INFO" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+</configuration>

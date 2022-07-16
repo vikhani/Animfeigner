@@ -1,4 +1,4 @@
-package com.vikhani.animfeigner.logging;
+package com.vikhani.animfeigner.configs;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

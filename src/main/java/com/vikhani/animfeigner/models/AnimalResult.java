@@ -18,10 +18,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class AnimalResult implements Serializable {
     @Id
+    @Column(columnDefinition = "uuid")
     private UUID UUId;
 
     @Column(name = "status")
-    private short httpStatus;
+    private int httpStatus;
 
     @Column(name = "animal_names")
     private String animalNames;

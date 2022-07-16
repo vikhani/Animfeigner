@@ -5,6 +5,8 @@ import com.vikhani.animfeigner.dtos.AnimalDto;
 import com.vikhani.animfeigner.models.AnimalResult;
 import com.vikhani.animfeigner.repositories.AnimalsResultsRepository;
 
+import feign.FeignException;
+
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -26,21 +28,35 @@ public class AnimalResultsService {
     public AnimalResult getAnimalsResults() {
         AnimalResult result = new AnimalResult();
         result.setUUId(UUID.randomUUID());
+        try {
+            ResponseEntity<List<AnimalDto>> requestRes = client.getAnimals();
 
-        ResponseEntity<List<AnimalDto>> requestRes = client.getAnimals();
-        result.setHttpStatus(requestRes.getStatusCode().value());
+            if (requestRes.getStatusCode().is2xxSuccessful()) {
+                result.setHttpStatus(requestRes.getStatusCodeValue());
+                List<AnimalDto> res = requestRes.getBody();
+                if (res != null && !res.isEmpty()) {
+                    List<String> names = res.stream()
+                            .map(AnimalDto::getNickname)
+                            .collect(Collectors.toCollection(ArrayList::new));
 
-        if (result.getHttpStatus() == 200) {
-            List<AnimalDto> res = requestRes.getBody();
-            if (res != null && !res.isEmpty()) {
-                List<String> names = res.stream()
-                        .map(AnimalDto::getNickname)
-                        .collect(Collectors.toCollection(ArrayList::new));
-
-                result.setAnimalNames(String.join(",", names));
+                    result.setAnimalNames(String.join(",", names));
+                } else {
+                    result.setAnimalNames("");
+                }
+            } else {
+                setNon2xxStatusFallback(result, requestRes.getStatusCodeValue());
             }
-        }
 
-        return addAnimalResult(result);
+            return addAnimalResult(result);
+        } catch (FeignException ex) {
+            setNon2xxStatusFallback(result, ex.status());
+
+            return addAnimalResult(result);
+        }
+    }
+
+    private static void setNon2xxStatusFallback(AnimalResult res, int status) {
+        res.setHttpStatus(status);
+        res.setAnimalNames("");
     }
 }

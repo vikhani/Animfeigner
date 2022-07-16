@@ -2,8 +2,6 @@ package com.vikhani.animfeigner.controllers;
 
 import com.vikhani.animfeigner.services.AnimalResultsService;
 
-import feign.FeignException;
-
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -20,11 +18,7 @@ public class AnimalResultController {
 
     @GetMapping
     public ResponseEntity<Object> getAnimals() {
-        try {
-            return new ResponseEntity<>(service.getAnimalsResults(), HttpStatus.OK);
-        } catch (FeignException ex) {
-            return new ResponseEntity<>(ex.responseBody(), HttpStatus.valueOf(ex.status()));
-        }
+        return new ResponseEntity<>(service.getAnimalsResults(), HttpStatus.OK);
     }
 
 }

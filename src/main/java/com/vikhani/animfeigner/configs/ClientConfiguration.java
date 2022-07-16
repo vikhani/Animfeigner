@@ -10,6 +10,7 @@ public class ClientConfiguration {
 
     @Bean
     public BasicAuthRequestInterceptor basicAuthRequestInterceptor(){
+        // TODO move credentials to environment variables
         return new BasicAuthRequestInterceptor("user", "password");
     }
 }

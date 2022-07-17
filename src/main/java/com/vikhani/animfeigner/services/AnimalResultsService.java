@@ -1,8 +1,8 @@
 package com.vikhani.animfeigner.services;
 
-import com.vikhani.animfeigner.client.AnimalRequestsClient;
 import com.vikhani.animfeigner.dtos.AnimalDto;
 import com.vikhani.animfeigner.models.AnimalResult;
+import com.vikhani.animfeigner.client.AnimalRequestsClient;
 import com.vikhani.animfeigner.repositories.AnimalsResultsRepository;
 
 import feign.FeignException;
@@ -21,27 +21,24 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class AnimalResultsService {
     private AnimalsResultsRepository repo;
+
     private final AnimalRequestsClient client;
 
     private Logger logger;
-
-    public AnimalResult addAnimalResult(AnimalResult result) {
-        return repo.save(result);
-    }
 
     public AnimalResult getAnimalsResults() {
         AnimalResult result = new AnimalResult();
         result.setUUId(UUID.randomUUID());
 
         try {
-            ResponseEntity<List<AnimalDto>> requestRes = client.getAnimals();
+            ResponseEntity<List<AnimalDto>> requestRes = getAnimalsFromClient();
 
             List<AnimalDto> body = requestRes.getBody();
             HttpStatus status = requestRes.getStatusCode();
 
             logger.info("Request response entity: {}, {}",
                     status,
-                    body == null ? "" : body);
+                    body == null ? Collections.emptyList() : body);
 
             if (status.is2xxSuccessful()) {
                 result.setHttpStatus(requestRes.getStatusCodeValue());
@@ -66,6 +63,14 @@ public class AnimalResultsService {
         }
 
         return addAnimalResult(result);
+    }
+
+    public AnimalResult addAnimalResult(AnimalResult result) {
+        return repo.save(result);
+    }
+
+    public ResponseEntity<List<AnimalDto>> getAnimalsFromClient() {
+        return client.getAnimals();
     }
 
     private static void setNon2xxStatusFallback(AnimalResult res, int status) {

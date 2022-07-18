@@ -14,7 +14,23 @@ Test assignment project that uses OpenFeign to act as a microservice communicati
 ## API
 `GET /animventory/animals`
 
-Gets result info about request for all animals for the user with the provided credentials.
+Gets result info about request for all animals for the user with the provided credentials, the animals are requested from [Animventory url]/animals via OpenFeign.
+
+## Integration with Animventory
+General outline is available in this [Postman Collection](https://www.getpostman.com/collections/b9c229bd07a0388b008b) (copy link and use Postman Import to import the collection). You'll need to change ports in `POST` requests to point to the Animventory port and to point to the Animfeigner port in the `GET` request.
+
+First you need to register in Animventory and then use these credentials to access animals in Animventory from Animfeigner. Without this you won't be able to get any results other than 401 from Animfeigner (it'll still be written to db and log as a result).
+*Request for Animventory url:*
+`POST /registration`
+
+*Bodyraw (json)*  
+json  
+{  
+  "username": "...",  
+  "password": "..."  
+}
+
+And then pass these credentials to Animfeigner like in the "Run" example (user can be logged out of Animventory).
 
 ## Logging
 Log is generated in `./logs/animal_request.log`

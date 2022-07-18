@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-
 @FeignClient(value = "animalrequests",
-        url = "${animfeigner.client.url:http://localhost:8080/}")
+        url = "${animventory.url:http://localhost:8080/}")
 public interface AnimalRequestsClient {
     @GetMapping(value = "/animals")
     ResponseEntity<List<AnimalDto>> getAnimals();

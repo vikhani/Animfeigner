@@ -37,7 +37,9 @@ Log is generated in `./logs/animal_request.log`
 
 ## DB
 While running DB is available on `/h2-console`
+
 url: `jdbc:h2:mem:animfeigner`
+
 Default credentials: admin/password
 
 

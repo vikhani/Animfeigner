@@ -1,7 +1,7 @@
 package com.vikhani.animfeigner;
 
-import com.vikhani.animfeigner.services.AnimalResultsService;
-import com.vikhani.animfeigner.controllers.AnimalResultController;
+import com.vikhani.animfeigner.services.AnimalRequestService;
+import com.vikhani.animfeigner.controllers.AnimalRequestController;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 class AnimfeignerApplicationTests {
 
 	@Autowired
-	private AnimalResultController controller;
+	private AnimalRequestController controller;
 
 	@Autowired
-	private AnimalResultsService service;
+	private AnimalRequestService service;
 
 	@Test
 	void contextLoads() {

@@ -28,7 +28,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class AnimalResultsServiceTest {
+class AnimalRequestServiceTest {
     @Mock
     private AnimalRequestsClient mockClient;
 
@@ -39,11 +39,11 @@ class AnimalResultsServiceTest {
     private Logger mockLogger;
 
     @Autowired
-    private AnimalResultsService service;
+    private AnimalRequestService service;
 
     @BeforeEach
     void setUp() {
-        service = new AnimalResultsService(mockRepo, mockClient, mockLogger);
+        service = new AnimalRequestService(mockRepo, mockClient, mockLogger);
     }
 
     @Test
@@ -62,7 +62,7 @@ class AnimalResultsServiceTest {
     void getAnimalsResultsNon2xxResponse() {
         when(service.getAnimalsFromClient()).thenThrow(FeignException.InternalServerError.class);
 
-        service.getAnimalsResults();
+        service.requestAnimals();
         verify(mockLogger).info(any(String.class), any(Integer.class), any());
 
         AnimalResult result = captureSavedAnimalResult();
@@ -74,7 +74,7 @@ class AnimalResultsServiceTest {
     @Test
     void getAnimalsResultsRetryableException() {
         when(service.getAnimalsFromClient()).thenThrow(feign.RetryableException.class);
-        service.getAnimalsResults();
+        service.requestAnimals();
         verify(mockLogger).info(any(String.class), any(Integer.class), any());
 
         AnimalResult result = captureSavedAnimalResult();
@@ -98,7 +98,7 @@ class AnimalResultsServiceTest {
         secondAnimal.setSpecies("");
 
         when(service.getAnimalsFromClient()).thenReturn(ResponseEntity.ok(Arrays.asList(firstAnimal, secondAnimal)));
-        service.getAnimalsResults();
+        service.requestAnimals();
 
         verify(mockLogger).info(any(String.class), any(HttpStatus.class), any(List.class));
 

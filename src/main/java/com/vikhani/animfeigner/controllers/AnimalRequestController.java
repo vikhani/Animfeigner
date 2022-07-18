@@ -1,7 +1,7 @@
 package com.vikhani.animfeigner.controllers;
 
 import com.vikhani.animfeigner.models.AnimalResult;
-import com.vikhani.animfeigner.services.AnimalResultsService;
+import com.vikhani.animfeigner.services.AnimalRequestService;
 
 import lombok.AllArgsConstructor;
 
@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RequestMapping("/animventory/animals")
 @AllArgsConstructor
-public class AnimalResultController {
+public class AnimalRequestController {
     private Logger logger;
 
-    private AnimalResultsService service;
+    private AnimalRequestService service;
 
     @GetMapping
     public ResponseEntity<Object> getAnimals() {
-        AnimalResult res = service.getAnimalsResults();
+        AnimalResult res = service.requestAnimals();
 
         logger.info("Added request results to the db. Result: {}", res);
 

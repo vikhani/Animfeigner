@@ -1,4 +1,4 @@
-# Animfeigner
+# Animfeigner [![Java CI with Gradle](https://github.com/vikhani/Animfeigner/actions/workflows/gradle.yml/badge.svg?branch=master)](https://github.com/vikhani/Animfeigner/actions/workflows/gradle.yml)
 Test assignment project that uses OpenFeign to act as a microservice communicating with the Animventory project.
 
 ## Run

@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @FeignClient(value = "animalrequests",
-        url = "${animfeigner.client.url:https://localhost:8080/}")
+        url = "${animfeigner.client.url}")
 public interface AnimalRequestsClient {
     @GetMapping(value = "/animals")
     ResponseEntity<List<AnimalDto>> getAnimals();

@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class AnimalResultsService {
+public class AnimalRequestService {
     private AnimalsResultsRepository repo;
 
     private final AnimalRequestsClient client;
 
     private Logger logger;
 
-    public AnimalResult getAnimalsResults() {
+    public AnimalResult requestAnimals() {
         AnimalResult result = new AnimalResult();
         result.setUUId(UUID.randomUUID());
 

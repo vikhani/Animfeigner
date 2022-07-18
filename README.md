@@ -2,11 +2,11 @@
 Test assignment project that uses OpenFeign to act as a microservice communicating with the Animventory project.
 
 ## Run
-`java -Dserver.port=[port to run on] -Danimfeigner.client.url=[url for running Animfeigner, ex. http://localhost:8085/] -Danimventory.username=[username] -Danimventory.password=[password] -jar path/to/Animfeigner.jar`
+`java -Dserver.port=[port to run on] -Danimventory.url=[url for running Animfeigner, ex. http://localhost:8085/] -Danimventory.username=[username] -Danimventory.password=[password] -jar path/to/Animfeigner.jar`
 
 **Example:**
 
-`java -Dserver.port=8083 -Danimfeigner.client.url=http://localhost:8085/ -Danimventory.username=user -Danimventory.password=pass -jar Animfeigner.jar`
+`java -Dserver.port=8083 -Danimventory.url=http://localhost:8085/ -Danimventory.username=user -Danimventory.password=pass -jar Animfeigner.jar`
 
 ## Build
 `./gradlew bootJar`
